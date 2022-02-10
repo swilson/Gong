@@ -55,9 +55,12 @@ extension MIDIClient {
             guard let endpointReference = connectionContext?.assumingMemoryBound(to: MIDIEndpointRef.self).pointee else {
                 return
             }
-            
-            for packet in packetList.pointee.packets {
+
+            var packet = packetList.pointee.packet
+            for _ in 0..<packetList.pointee.numPackets {
                 callback(packet, MIDISource(endpointReference))
+                let packetPtr = MIDIPacketNext(&packet)
+                packet = packetPtr.pointee
             }
         }
         
