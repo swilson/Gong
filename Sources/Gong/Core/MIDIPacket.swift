@@ -106,8 +106,8 @@ extension MIDIPacket {
             let bytes = Mirror(reflecting: data).children.compactMap { child in
                 return child.value as? UInt8
             }
-            
-            return bytes.unpad(with: 0)
+           
+            return Array(bytes[..<Int(length)])
         }
         set {
             let bytes = newValue.pad(with: 0, to: 256)
