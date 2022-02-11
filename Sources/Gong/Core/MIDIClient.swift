@@ -9,6 +9,7 @@
 import Foundation
 import CoreMIDI
 
+
 public class MIDIClient: MIDIObject {
     
     public typealias NoticeCallback = (_ notice: MIDINotice) -> Void
@@ -56,11 +57,9 @@ extension MIDIClient {
                 return
             }
 
-            var packet = packetList.pointee.packet
-            for _ in 0..<packetList.pointee.numPackets {
-                callback(packet, MIDISource(endpointReference))
-                let packetPtr = MIDIPacketNext(&packet)
-                packet = packetPtr.pointee
+            // Iterate over MIDIPacketList. Anything using MIDIPacketNext does not appear to work correctly.
+            for packet in packetList.unsafeSequence() {
+                callback(packet.pointee, MIDISource(endpointReference))
             }
         }
         

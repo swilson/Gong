@@ -1,11 +1,11 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.1
 
 import PackageDescription
 
 let package = Package(
     name: "Gong",
     platforms: [
-        .iOS(.v9),
+        .iOS(.v13),
         .macOS(.v10_10),
         .tvOS(.v9)
     ],
